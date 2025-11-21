@@ -1,0 +1,239 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #eff9fa;
+    color: #776e65;
+    line-height: 1.4;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 80px;
+    font-weight: bold;
+    color: #776e65;
+}
+
+.scores {
+    display: flex;
+    gap: 10px;
+}
+
+.score-box {
+    background: #2196F3;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 3px;
+    text-align: center;
+    min-width: 80px;
+}
+
+.score-title {
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+#score, #best-score {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.game-intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+button {
+    background: #1976D2;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+button:hover {
+    background: #1565C0;
+}
+
+.game-container {
+    position: relative;
+    background: #a5e9f3;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.cell {
+    width: 100%;
+    height: 100px;
+    background: rgba(10, 217, 228, 0.35);
+    border-radius: 3px;
+    position: relative;
+}
+
+.tile {
+    position: absolute;
+    width: calc(25% - 11.25px);
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 45px;
+    font-weight: bold;
+    border-radius: 3px;
+    transition: all 0.15s ease-in-out;
+    z-index: 2;
+}
+
+.tile-2 { color: #fffdfe; background: #deb1c3; }
+.tile-4 { color: #ffffff; background: #e98bb4; }
+.tile-8 { color: #ffffff; background: #f48fb1; }
+.tile-16 { color: #ffffff; background: #f06292; }
+.tile-32 { color: #ffffff; background: #ec407a; }
+.tile-64 { color: #ffffff; background: #e91e63; }
+.tile-128 { 
+    color: #ffffff; 
+    background: #d81b60;
+    font-size: 40px;
+    box-shadow: 0 0 30px 10px rgba(216, 27, 96, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+.tile-256 { 
+    color: #ffffff; 
+    background: #c2185b;
+    font-size: 40px;
+    box-shadow: 0 0 30px 10px rgba(194, 24, 91, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+.tile-512 { 
+    color: #ffffff; 
+    background: #ad1457;
+    font-size: 40px;
+    box-shadow: 0 0 30px 10px rgba(173, 20, 87, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+.tile-1024 { 
+    color: #ffffff; 
+    background: #880e4f;
+    font-size: 35px;
+    box-shadow: 0 0 30px 10px rgba(136, 14, 79, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+.tile-2048 { 
+    color: #ffffff; 
+    background: #6d0047;
+    font-size: 35px;
+    box-shadow: 0 0 30px 10px rgba(109, 0, 71, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.game-over, .win {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(180, 240, 241, 0.73);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    display: none;
+}
+
+.game-over p, .win p {
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #b85546;
+}
+
+.win-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.game-explanation {
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pop {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.tile.new {
+    animation: appear 0.2s ease-in-out;
+}
+
+.tile.merged {
+    animation: pop 0.2s ease-in-out;
+    z-index: 10;
+}
+
+@media (max-width: 520px) {
+    .container {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 60px;
+    }
+    
+    .tile {
+        font-size: 35px;
+        height: 80px;
+    }
+    
+    .tile-128, .tile-256, .tile-512 {
+        font-size: 30px;
+    }
+    
+    .tile-1024, .tile-2048 {
+        font-size: 25px;
+    }
+    
+    .game-explanation {
+        font-size: 16px;
+    }
+}
